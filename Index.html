@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>My Portfolio</title>
+   <!-- Tailwind CSS CDN -->
+   <script src="https://cdn.tailwindcss.com"></script>
+   <!-- Google Font - Inter -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+   <style>
+       /* Custom CSS for scroll-snap and font */
+       body {
+           font-family: 'Inter', sans-serif;
+           scroll-behavior: smooth;
+       }
+
+       /* The container for the full-screen sections */
+       .scroll-container {
+           height: 100vh;
+           overflow-y: scroll;
+           scroll-snap-type: y mandatory;
+           -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
+       }
+
+       /* Each section will snap to the top of the viewport */
+       .snap-section {
+           height: 100vh;
+           scroll-snap-align: start;
+       }
+   </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+
+   <!-- Floating Header -->
+   <header class="fixed top-0 left-0 w-full z-50 bg-gray-900 bg-opacity-70 backdrop-filter backdrop-blur-lg shadow-lg transition-all duration-300">
+       <nav class="container mx-auto px-6 py-4 flex justify-center items-center">
+           <a href="#about" class="mx-4 text-lg font-bold hover:text-indigo-400 transition-colors duration-200">About</a>
+           <a href="#education" class="mx-4 text-lg font-bold hover:text-indigo-400 transition-colors duration-200">Education</a>
+           <a href="#interests" class="mx-4 text-lg font-bold hover:text-indigo-400 transition-colors duration-200">Interests</a>
+       </nav>
+   </header>
+
+   <!-- Main Content Container with Scroll-Snap -->
+   <div class="scroll-container">
+
+       <!-- About Section -->
+       <section id="about" class="snap-section bg-gray-800 flex items-center justify-center p-8">
+           <div class="text-center max-w-2xl mx-auto">
+               <h1 class="text-5xl font-bold mb-4 text-indigo-400">Hello, I'm Snehan</h1>
+               <p class="text-xl leading-relaxed">
+                   A passionate web developer and designer with a focus on creating elegant and functional digital experiences. I enjoy blending technical skills with creative problem-solving to build beautiful and intuitive applications.
+               </p>
+           </div>
+       </section>
+
+       <!-- Education Section -->
+       <section id="education" class="snap-section bg-gray-900 flex items-center justify-center p-8">
+           <div class="text-center max-w-2xl mx-auto">
+               <h2 class="text-5xl font-bold mb-4 text-indigo-400">My Education</h2>
+               <div class="space-y-6">
+                   <div>
+                       <h3 class="text-2xl font-semibold">SUSS</h3>
+                       <p class="text-lg text-gray-300">BSC in ICT</p>
+                       <p class="text-md text-gray-400">2024 - 2028</p>
+                   </div>
+                   <div>
+                       <h3 class="text-2xl font-semibold">Online Courses & Certifications</h3>
+                       <p class="text-lg text-gray-300">Full-Stack Development, UI/UX Design Principles</p>
+                       <p class="text-md text-gray-400">Various</p>
+                   </div>
+               </div>
+           </div>
+       </section>
+
+       <!-- Interests Section -->
+       <section id="interests" class="snap-section bg-gray-800 flex items-center justify-center p-8">
+           <div class="text-center max-w-2xl mx-auto">
+               <h2 class="text-5xl font-bold mb-4 text-indigo-400">My Interests</h2>
+               <div class="flex justify-center space-x-8 text-6xl">
+                   <!-- Example icons, you can replace these with your own -->
+                   <span class="hover:scale-110 transition-transform duration-200" title="Hiking">🥾</span>
+                   <span class="hover:scale-110 transition-transform duration-200" title="Photography">📸</span>
+                   <span class="hover:scale-110 transition-transform duration-200" title="Reading">📚</span>
+                   <span class="hover:scale-110 transition-transform duration-200" title="Coding">💻</span>
+               </div>
+               <p class="text-xl mt-8 leading-relaxed">
+                   I love exploring the outdoors, capturing moments through a lens, getting lost in a good book, and of course, building things with code!
+               </p>
+           </div>
+       </section>
+
+   </div>
+</body>
+</html>
+
+
