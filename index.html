@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Snehan | Portfolio</title>
-  <meta name="description" content="Snehan Shanker – Portfolio & Links" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Snehan | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
     :root{
       --bg: #0a0a0d; /* near-black */
       --bg-soft: #111118;
@@ -23,7 +20,7 @@
       --radius: 18px;
     }
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+    html{scroll-behavior:smooth; scroll-snap-type:y proximity}
     body{
       margin:0; font-family:"Manrope",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
       background: radial-gradient(1200px 600px at 70% -10%, rgba(241,198,68,.12), transparent),
@@ -45,8 +42,12 @@
     .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.6px}
     .brand .dot{width:10px; height:10px; border-radius:50%; background:linear-gradient(135deg,var(--gold),var(--gold-2)); box-shadow:0 0 18px rgba(241,198,68,.8)}
     .nav a{opacity:.9}
-    .nav a:hover{opacity:1}
+    .nav a:hover{opacity:1; text-shadow:0 0 12px rgba(241,198,68,.6)}
     .links{display:flex; gap:18px; font-weight:600}
+
+    /* Crossfade between sections */
+    .hero, section{scroll-snap-align:start; scroll-margin-top:70px; transition: opacity .9s ease, transform .9s ease, filter .9s ease; opacity:.35; transform: translateY(10px) scale(.985); filter:saturate(.9)}
+    .hero.active, section.active{opacity:1; transform:none; filter:saturate(1.05)}
 
     /* Hero */
     .hero{min-height:92vh; display:grid; place-items:center; position:relative; overflow:hidden}
@@ -57,22 +58,50 @@
       background: linear-gradient(180deg, #ffffff, #ffe7a3 65%, #e9b83e);
       -webkit-background-clip: text; background-clip:text; color: transparent;
       text-shadow: 0 10px 40px rgba(241,198,68,.15);
+      animation: titleFloat 8s ease-in-out infinite;
     }
+    @keyframes titleFloat { 0%{transform:translateY(0)} 50%{transform:translateY(-2px)} 100%{transform:translateY(0)} }
+
     .sub{max-width:750px; margin:0 auto; color:var(--muted); font-size:1.05rem}
     .cta-row{display:flex; gap:14px; justify-content:center; margin-top:8px}
     .btn{padding:12px 18px; border-radius:999px; display:inline-flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px; border:1px solid var(--outline); background:linear-gradient(180deg, rgba(241,198,68,.16), rgba(241,198,68,.06)); box-shadow:var(--shadow)}
-    .btn:hover{transform: translateY(-1px); box-shadow:0 25px 50px rgba(0,0,0,.55)}
+    .btn:hover{transform: translateY(-1px); box-shadow:0 25px 50px rgba(0,0,0,.55); text-shadow:0 0 10px rgba(241,198,68,.6)}
     .btn--ghost{background:transparent; color:var(--text)}
 
     /* Section */
     section{padding:84px 0; position:relative}
-    .section-title{font-size: clamp(1.4rem, 2.8vw, 2.2rem); margin:0 0 22px; font-weight:800}
+
+    /* Neon section headings */
+    .section-title{
+      position:relative; margin:0 0 22px; font-weight:900; letter-spacing:.5px;
+      font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+      color:#fff6c9; /* warm white */
+      text-shadow:
+        0 0 6px rgba(255,216,107,.7),
+        0 0 14px rgba(241,198,68,.75),
+        0 0 28px rgba(241,198,68,.55),
+        0 0 56px rgba(241,198,68,.35);
+      animation: neonPulse 3.6s ease-in-out infinite alternate, neonFlicker 12s linear infinite;
+    }
+    .section-title::after{
+      content:""; position:absolute; left:0; bottom:-10px; width:120px; height:4px; border-radius:999px;
+      background: linear-gradient(90deg, #fff6c9, #ffd86b 60%, #f1c644);
+      box-shadow:0 0 16px rgba(241,198,68,.8), 0 0 32px rgba(241,198,68,.5);
+    }
+    @keyframes neonPulse { from{ filter: drop-shadow(0 0 8px rgba(241,198,68,.6)); } to{ filter: drop-shadow(0 0 18px rgba(241,198,68,1)); } }
+    @keyframes neonFlicker {
+      0%, 97%, 100%{opacity:1}
+      98%{opacity:.75}
+      99%{opacity:.9}
+    }
+
     .section-sub{color:var(--muted); margin-top:-8px; margin-bottom:30px}
 
     /* Cards */
     .grid{display:grid; gap:22px}
     @media(min-width:760px){.grid{grid-template-columns:repeat(2,1fr)}}
-    .card{background:linear-gradient(180deg, rgba(255,216,107,.06), rgba(255,216,107,.02)); border:1px solid var(--outline); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow)}
+    .card{background:linear-gradient(180deg, rgba(255,216,107,.06), rgba(255,216,107,.02)); border:1px solid var(--outline); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); transition: transform .4s ease, box-shadow .4s ease}
+    .card:hover{transform: translateY(-4px); box-shadow:0 30px 80px rgba(0,0,0,.6)}
     .card h3{margin:0 0 8px; font-size:1.2rem}
     .badge{display:inline-block; background:rgba(241,198,68,.15); border:1px solid var(--outline); padding:2px 10px; border-radius:999px; font-weight:700; font-size:.82rem; letter-spacing:.2px}
 
@@ -80,11 +109,9 @@
     .socials{display:flex; gap:14px; margin-top:12px}
     .icon-btn{width:46px; height:46px; border-radius:14px; display:grid; place-items:center; border:1px solid var(--outline); background:linear-gradient(180deg, rgba(241,198,68,.10), rgba(241,198,68,.03)); transition:transform .2s ease, box-shadow .2s ease}
     .icon-btn:hover{transform: translateY(-3px) scale(1.02); box-shadow:0 22px 60px rgba(0,0,0,.5)}
-    .icon{width:22px; height:22px; fill: url(#goldGradient);
-      filter: drop-shadow(0 4px 14px rgba(241,198,68,.45));
-    }
+    .icon{width:22px; height:22px; fill: url(#goldGradient); filter: drop-shadow(0 4px 14px rgba(241,198,68,.45));}
 
-    /* Scroll animations */
+    /* Scroll-in reveal for inner content */
     [data-animate]{opacity:0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease}
     [data-animate].in-view{opacity:1; transform: translateY(0)}
 
@@ -98,130 +125,52 @@
   </style>
 </head>
 <body>
-  <svg width="0" height="0" style="position:absolute">
-    <defs>
-      <linearGradient id="goldGradient" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#fff6c9"/>
-        <stop offset="60%" stop-color="#ffd86b"/>
-        <stop offset="100%" stop-color="#f1c644"/>
-      </linearGradient>
-    </defs>
-  </svg>
-
-  <!-- NAV -->
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a href="#top" class="brand" aria-label="Home">
-        <span class="dot" aria-hidden="true"></span>
-        <span>Snehan</span>
-      </a>
-      <div class="links">
-        <a href="#about">About</a>
-        <a href="#education">Education</a>
-        <a href="#hobbies">Hobbies</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <header id="top" class="hero">
-    <div class="orb"></div>
-    <div class="orb r"></div>
-    <div class="container wrap" data-animate>
-      <div class="eyebrow">Portfolio</div>
-      <h1>Hey, I’m <span style="white-space:nowrap">Snehan Shanker</span> — builder, learner, and explorer.</h1>
-      <p class="sub">I study Information & Communication Technology and enjoy crafting delightful, performance‑minded experiences on the web. Scroll to learn more.</p>
-      <div class="cta-row">
-        <a class="btn" href="#about">Explore ↓</a>
-        <a class="btn btn--ghost" href="#education">My Education</a>
-      </div>
-    </div>
-  </header>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="container" data-animate>
-      <h2 class="section-title">About</h2>
-      <p class="section-sub">Based in Singapore, pursuing BSc ICT at SUSS (2024–2028). I love clean UI, meaningful interactions, and anything with two wheels.</p>
-      <div class="grid">
-        <article class="card">
-          <h3>Links</h3>
-          <p>Find me around the web:</p>
-          <div class="socials" aria-label="Social links">
-            <a class="icon-btn" href="https://www.instagram.com/snehan._?igsh=MXU3bXA4ZDdjZm56bQ%3D%3D&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">
-              <!-- Instagram SVG -->
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.51 5.51 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zM18 6.25a1.25 1.25 0 1 1-1.25 1.25A1.25 1.25 0 0 1 18 6.25z"/></svg>
-            </a>
-            <a class="icon-btn" href="https://www.linkedin.com/in/snehan-shanker" target="_blank" rel="noopener" aria-label="LinkedIn">
-              <!-- LinkedIn SVG -->
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V24h-4zM8 8h3.8v2.2h.06C12.65 8.9 14.5 8 16.75 8 21.3 8 24 10.6 24 15.4V24h-4v-7.4c0-3-1.08-4.6-3.37-4.6-1.84 0-2.94 1.24-3.42 2.44-.18.43-.22 1.03-.22 1.63V24H8z"/></svg>
-            </a>
-          </div>
-        </article>
-        <article class="card">
-          <h3>Now</h3>
-          <p>Currently exploring front‑end engineering patterns, UX motion, and building playful micro‑interactions. Open to collaboration on student projects and hackathons.</p>
-          <span class="badge">Based in SG</span>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section id="education">
-    <div class="container" data-animate>
-      <h2 class="section-title">Education</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>BSc (ICT), Singapore University of Social Sciences</h3>
-          <p>2024 — 2028</p>
-          <p>Focus: Information & Communication Technology. Interests include web engineering, human‑computer interaction, and applied data.</p>
-          <span class="badge">SUSS 2024–2028</span>
-        </article>
-        <article class="card">
-          <h3>Highlights</h3>
-          <ul>
-            <li>Hands‑on projects in HTML, CSS, and JavaScript.</li>
-            <li>Coursework spanning software design, networking, and UX.</li>
-            <li>Passion for building accessible, performant interfaces.</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOBBIES -->
-  <section id="hobbies">
-    <div class="container" data-animate>
-      <h2 class="section-title">Hobbies</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>Riding Motorbikes</h3>
-          <p>I enjoy the focus and freedom of two‑wheeled travel. Safety first, always.</p>
-          <span class="badge">Gear‑up & ride</span>
-        </article>
-        <article class="card">
-          <h3>Video Games</h3>
-          <p>From strategy to story‑driven indies, I love games that challenge thinking and imagination.</p>
-          <span class="badge">Player 1</span>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container tiny">© <span id="year"></span> Snehan. Crafted with HTML, CSS & a pinch of JS.</div>
-  </footer>
-
-  <script>
-    // Intersection Observer for scroll-in animations
+<div class="nav">
+  <a href="#about">About</a>
+  <a href="#education">Education</a>
+  <a href="#hobbies">Hobbies</a>
+</div>
+<section id="about">
+  <h2 class="section-title">About</h2>
+  <div class="card">Based in Singapore, pursuing BSc ICT at SUSS (2024–2028).</div>
+  <div class="socials">
+    <a class="icon-btn" href="https://www.instagram.com/snehan._?igsh=MXU3bXA4ZDdjZm56bQ%3D%3D&utm_source=qr" target="_blank"><svg class="icon" viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.51 5.51 0 0 1 12 7.5z"/></svg></a>
+    <a class="icon-btn" href="https://www.linkedin.com/in/snehan-shanker" target="_blank"><svg class="icon" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V24h-4zM8 8h3.8v2.2h.06C12.65 8.9 14.5 8 16.75 8 21.3 8 24 10.6 24 15.4V24h-4v-7.4c0-3-1.08-4.6-3.37-4.6-1.84 0-2.94 1.24-3.42 2.44-.18.43-.22 1.03-.22 1.63V24H8z"/></svg></a>
+  </div>
+</section>
+<section id="education">
+  <h2 class="section-title">Education</h2>
+  <div class="card">BSc (ICT), Singapore University of Social Sciences, 2024–2028</div>
+</section>
+<section id="hobbies">
+  <h2 class="section-title">Hobbies</h2>
+  <div class="card">Riding motorbikes, playing video games</div>
+</section>
+<script>
+    // Intersection Observer for scroll-in animations (cards/text)
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in-view'); });
     }, { threshold: 0.16 });
     document.querySelectorAll('[data-animate]').forEach(el=>io.observe(el));
 
-    // Dynamic year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Crossfade / focus active section as you scroll
+    const sections = Array.from(document.querySelectorAll('header.hero, section'));
+    const io2 = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting && e.intersectionRatio > 0.55){
+          e.target.classList.add('active');
+        } else if (!e.isIntersecting){
+          e.target.classList.remove('active');
+        }
+      });
+    }, { threshold: [0, .2, .4, .6, .8, 1] });
+    sections.forEach(sec=> io2.observe(sec));
+    // Ensure hero starts active
+    window.addEventListener('load', ()=>{
+      const hero = document.querySelector('.hero');
+      if(hero) hero.classList.add('active');
+      document.getElementById('year').textContent = new Date().getFullYear();
+    });
   </script>
 </body>
 </html>
